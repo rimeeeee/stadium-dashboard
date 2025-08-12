@@ -41,7 +41,7 @@ const Overview: React.FC<OverviewProps> = ({
         <h2 className="text-2xl font-bold text-gray-900">전체 운영 현황</h2>
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span className="text-sm text-gray-600">실시간 업데이트</span>
+          <span className="text-sm text-gray-600">실시간 AI 분석중</span>
         </div>
       </div>
 

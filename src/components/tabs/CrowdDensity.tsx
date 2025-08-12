@@ -37,8 +37,8 @@ const CrowdDensity: React.FC<CrowdDensityProps> = ({ zones }) => {
           구역별 실시간 관중 밀집도
         </h2>
         <div className="flex items-center gap-2 text-sm text-gray-600">
-          <TrendingUp className="w-4 h-4" />
-          실시간 업데이트
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          실시간 AI 분석중
         </div>
       </div>
 

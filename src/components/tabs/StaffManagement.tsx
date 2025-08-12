@@ -32,8 +32,8 @@ const StaffManagement: React.FC<StaffManagementProps> = ({
           인력 배치 현황
         </h2>
         <div className="flex items-center gap-2 text-sm text-gray-600">
-          <TrendingUp className="w-4 h-4" />
-          실시간 모니터링
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          실시간 AI 분석중
         </div>
       </div>
 
@@ -68,7 +68,7 @@ const StaffManagement: React.FC<StaffManagementProps> = ({
         <h3 className="text-lg font-semibold text-gray-900 mb-6">구역별 인력 배치 현황</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {chartData.map((zone) => {
-            const percentage = Math.min(100, Math.round((zone.current / zone.recommended) * 100));
+            const percentage = Math.round((zone.current / zone.recommended) * 100);
             const getFillColor = (percent: number) => {
               if (percent >= 100) return 'text-green-600';
               if (percent >= 80) return 'text-blue-600';
@@ -95,7 +95,7 @@ const StaffManagement: React.FC<StaffManagementProps> = ({
                       fill="currentColor"
                       className={`${getFillColor(percentage)} transition-all duration-300`}
                       style={{
-                        clipPath: `inset(${100 - percentage}% 0 0 0)`
+                        clipPath: `inset(${Math.max(0, 100 - percentage)}% 0 0 0)`
                       }}
                     />
                   </svg>
@@ -123,7 +123,7 @@ const StaffManagement: React.FC<StaffManagementProps> = ({
                 <div className="mt-3">
                   {percentage >= 100 ? (
                     <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      충분
+                      {percentage > 100 ? '초과' : '충분'}
                     </div>
                   ) : percentage >= 80 ? (
                     <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">

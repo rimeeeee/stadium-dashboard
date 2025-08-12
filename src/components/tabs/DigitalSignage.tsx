@@ -66,8 +66,8 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
           디지털 사이니지
         </h2>
         <div className="flex items-center gap-2 text-sm text-gray-600">
-          <Target className="w-4 h-4" />
-          맞춤 콘텐츠 추천
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          실시간 AI 분석중
         </div>
       </div>
 
@@ -197,7 +197,7 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
             <div className="text-2xl font-bold text-blue-900">24개</div>
           </div>
           <div>
-            <div className="text-blue-700 font-medium">실시간 업데이트</div>
+            <div className="text-blue-700 font-medium">실시간 AI 분석중</div>
             <div className="text-2xl font-bold text-blue-900">98%</div>
           </div>
           <div>

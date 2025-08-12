@@ -121,8 +121,8 @@ const DetailedStatus: React.FC<DetailedStatusProps> = ({ sections }) => {
           구역별 상세 현황
         </h2>
         <div className="flex items-center gap-2 text-sm text-gray-600">
-          <TrendingUp className="w-4 h-4" />
-          실시간 모니터링
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          실시간 AI 분석중
         </div>
       </div>
 
