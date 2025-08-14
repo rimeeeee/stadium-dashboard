@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Zone } from '../../types/stadium';
-import { Users, AlertTriangle, CheckCircle, TrendingUp } from 'lucide-react';
+import { Users, AlertTriangle, CheckCircle, TrendingUp, X, ArrowRight } from 'lucide-react';
 
 interface StaffManagementProps {
   zones: Zone[];
@@ -14,18 +14,146 @@ const StaffManagement: React.FC<StaffManagementProps> = ({
   totalStaff, 
   recommendedTotalStaff 
 }) => {
-  const chartData = zones.map(zone => ({
+  const [showOptimizationPopup, setShowOptimizationPopup] = useState(false);
+  const [optimizationRecommendations, setOptimizationRecommendations] = useState<Array<{
+    from: string;
+    to: string;
+    count: number;
+    reason: string;
+  }>>([]);
+  const [optimizedZones, setOptimizedZones] = useState(zones);
+  const [hasOptimized, setHasOptimized] = useState(false);
+
+  const chartData = optimizedZones.map(zone => ({
     name: zone.name,
     current: zone.staffCount,
     recommended: zone.recommendedStaff,
     difference: zone.recommendedStaff - zone.staffCount
   }));
 
-  const understaffedZones = zones.filter(zone => zone.staffCount < zone.recommendedStaff);
-  const overstaffedZones = zones.filter(zone => zone.staffCount > zone.recommendedStaff);
+  const understaffedZones = optimizedZones.filter(zone => zone.staffCount < zone.recommendedStaff);
+  const overstaffedZones = optimizedZones.filter(zone => zone.staffCount > zone.recommendedStaff);
+
+  // 인력 재배치 적용 함수
+  const applyOptimization = () => {
+    const newZones = [...optimizedZones];
+    
+    optimizationRecommendations.forEach(rec => {
+      const fromZone = newZones.find(zone => zone.name === rec.from);
+      const toZone = newZones.find(zone => zone.name === rec.to);
+      
+      if (fromZone && toZone) {
+        fromZone.staffCount -= rec.count;
+        toZone.staffCount += rec.count;
+      }
+    });
+    
+    setOptimizedZones(newZones);
+    setHasOptimized(true);
+    setShowOptimizationPopup(false);
+  };
+
+  // 나중에 버튼 클릭 시
+  const handleLater = () => {
+    setShowOptimizationPopup(false);
+  };
+
+  // 효율화 추천 계산
+  useEffect(() => {
+    const recommendations: Array<{
+      from: string;
+      to: string;
+      count: number;
+      reason: string;
+    }> = [];
+
+    // 과잉 구역에서 부족 구역으로 이동 추천
+    overstaffedZones.forEach(overZone => {
+      const excess = overZone.staffCount - overZone.recommendedStaff;
+      if (excess > 0) {
+        understaffedZones.forEach(underZone => {
+          const shortage = underZone.recommendedStaff - underZone.staffCount;
+          if (shortage > 0) {
+            const moveCount = Math.min(excess, shortage);
+            if (moveCount > 0) {
+              recommendations.push({
+                from: overZone.name,
+                to: underZone.name,
+                count: moveCount,
+                reason: `${overZone.name}에서 ${underZone.name}로 이동하여 효율성 향상`
+              });
+            }
+          }
+        });
+      }
+    });
+
+    setOptimizationRecommendations(recommendations);
+    
+    // 효율화가 필요한 경우 팝업 표시 (최적화하지 않은 경우에만)
+    if (recommendations.length > 0 && !hasOptimized) {
+      setShowOptimizationPopup(true);
+    }
+  }, [overstaffedZones, understaffedZones, hasOptimized]);
 
   return (
     <div className="space-y-6">
+      {/* 효율화 팝업 */}
+      {showOptimizationPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-orange-600" />
+                <h3 className="text-lg font-semibold text-gray-900">인력 비효율화 발생</h3>
+              </div>
+              <button
+                onClick={() => setShowOptimizationPopup(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="mb-4">
+              <p className="text-sm text-gray-600 mb-3">
+                AI 기반 재배치 추천
+              </p>
+              
+              <div className="space-y-3">
+                {optimizationRecommendations.slice(0, 3).map((rec, index) => (
+                  <div key={index} className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-blue-900">{rec.from}</span>
+                      <ArrowRight className="w-4 h-4 text-blue-600" />
+                      <span className="text-sm font-medium text-blue-900">{rec.to}</span>
+                    </div>
+                    <div className="text-xs text-blue-700">
+                      {rec.count}명 이동 권장
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="flex gap-3">
+              <button
+                onClick={handleLater}
+                className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+              >
+                나중에
+              </button>
+              <button
+                onClick={applyOptimization}
+                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                적용하기
+              </button>
+            </div>
+          </div>
+        </div>
+            )}
+      
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
           <Users className="w-6 h-6 text-blue-600" />
@@ -36,6 +164,19 @@ const StaffManagement: React.FC<StaffManagementProps> = ({
           실시간 AI 분석중
         </div>
       </div>
+
+      {/* 최적화 완료 알림 */}
+      {hasOptimized && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="w-5 h-5 text-green-600" />
+            <span className="text-green-800 font-medium">인력 재배치가 완료되었습니다!</span>
+          </div>
+          <p className="text-sm text-green-700 mt-1">
+            AI 추천에 따라 인력이 효율적으로 재배치되었습니다.
+          </p>
+        </div>
+      )}
 
       {/* 전체 인력 현황 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
