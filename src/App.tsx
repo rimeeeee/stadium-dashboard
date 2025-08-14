@@ -73,22 +73,32 @@ function App() {
         {/* 상단 헤더 */}
         <header className="bg-white border-b border-gray-200 px-8 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                <p className="text-gray-600 mt-1">야구장 종합 운영 관리 시스템</p>
+            {/* 좌측: 제목 */}
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+              <p className="text-gray-600 mt-1">야구장 종합 운영 관리 시스템</p>
+            </div>
+            
+            {/* 중앙: 로고들 */}
+            <div className="flex items-center justify-center gap-8 flex-1">
+              <div className="flex items-center justify-center">
+                <img 
+                  src="/logo.png" 
+                  alt="STADIUM X Logo" 
+                  className="w-32 h-32 object-contain drop-shadow-lg hover:scale-105 transition-transform duration-300" 
+                />
               </div>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <img src="/logo.png" alt="STADIUM X Logo" className="w-48 h-48" />
-                </div>
-                <div className="flex items-center gap-2">
-              
-                  <img src="/twins.png" alt="LG TWINS Logo" className="h-20 w-auto" />
-                </div>
+              <div className="flex items-center justify-center">
+                <img 
+                  src="/twins.png" 
+                  alt="LG TWINS Logo" 
+                  className="h-16 w-auto object-contain drop-shadow-lg hover:scale-105 transition-transform duration-300" 
+                />
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            
+            {/* 우측: 상태 정보 */}
+            <div className="flex items-center gap-4 flex-1 justify-end">
               <div className="text-sm text-gray-500">
                 마지막 업데이트: {new Date().toLocaleTimeString('ko-KR')}
               </div>
