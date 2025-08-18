@@ -59,27 +59,27 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
   };
 
   return (
-    <div className="space-y-6">
+    <div className="h-full overflow-auto space-y-2 sm:space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-          <Monitor className="w-6 h-6 text-blue-600" />
+        <h2 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 flex items-center gap-2">
+          <Monitor className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-blue-600" />
           디지털 사이니지
         </h2>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="flex items-center gap-2 text-xs text-gray-600">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
           실시간 AI 분석중
         </div>
       </div>
 
       {/* 구역별 관중 인구 통계 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3">
         {/* 성별 분포 */}
-        <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <Users className="w-5 h-5 text-blue-600" />
+        <div className="bg-white rounded-lg p-2 sm:p-3 border border-gray-200 shadow-sm">
+          <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3 flex items-center gap-2">
+            <Users className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
             전체 구역 성별 분포
           </h3>
-          <div className="h-64">
+          <div className="h-32 sm:h-40">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -89,7 +89,7 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
                   ]}
                   cx="50%"
                   cy="50%"
-                  outerRadius={80}
+                  outerRadius={40}
                   dataKey="value"
                   label={({ name, value }) => `${name}: ${value}%`}
                 >
@@ -103,12 +103,12 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
         </div>
 
         {/* 연령대 분포 */}
-        <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <Users className="w-5 h-5 text-green-600" />
+        <div className="bg-white rounded-lg p-2 sm:p-3 border border-gray-200 shadow-sm">
+          <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3 flex items-center gap-2">
+            <Users className="w-3 h-3 sm:w-4 sm:h-4 text-green-600" />
             전체 구역 연령대 분포
           </h3>
-          <div className="h-64">
+          <div className="h-32 sm:h-40">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -121,7 +121,7 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
                   ]}
                   cx="50%"
                   cy="50%"
-                  outerRadius={80}
+                  outerRadius={40}
                   dataKey="value"
                   label={({ name, value }) => `${name}: ${value}%`}
                 >
@@ -137,22 +137,22 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
       </div>
 
       {/* 구역별 맞춤 콘텐츠 추천 */}
-      <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
-          <Lightbulb className="w-5 h-5 text-yellow-600" />
+      <div className="bg-white rounded-lg p-2 sm:p-3 border border-gray-200 shadow-sm">
+        <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3 flex items-center gap-2">
+          <Lightbulb className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-600" />
           구역별 맞춤 콘텐츠 추천
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
           {zones.map((zone) => {
             const recommendations = getContentRecommendations(zone.id);
             const demo = demographicData[zone.id];
             
             return (
-              <div key={zone.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-semibold text-gray-900">{zone.name}</h4>
-                  <div className={`px-2 py-1 rounded text-xs font-medium ${
+              <div key={zone.id} className="border border-gray-200 rounded-lg p-2 sm:p-3 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-1 sm:mb-2">
+                  <h4 className="font-semibold text-gray-900 text-xs sm:text-sm">{zone.name}</h4>
+                  <div className={`px-1 py-0.5 rounded text-xs font-medium ${
                     zone.density === 'high' ? 'bg-orange-100 text-orange-800' :
                     zone.density === 'medium' ? 'bg-yellow-100 text-yellow-800' :
                     'bg-green-100 text-green-800'
@@ -163,7 +163,7 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
                 </div>
                 
                 {demo && (
-                  <div className="text-xs text-gray-600 mb-3">
+                  <div className="text-xs text-gray-600 mb-1 sm:mb-2">
                     <div>남성: {demo.gender.male}% | 여성: {demo.gender.female}%</div>
                     <div>주요 연령대: {Object.entries(demo.ageGroups).reduce((a, b) => 
                       demo.ageGroups[a[0]] > demo.ageGroups[b[0]] ? a : b
@@ -171,10 +171,10 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
                   </div>
                 )}
                 
-                <div className="space-y-2">
-                  <div className="text-sm font-medium text-gray-800">추천 콘텐츠:</div>
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-800">추천 콘텐츠:</div>
                   {recommendations.map((rec, index) => (
-                    <div key={index} className="text-xs bg-blue-50 text-blue-800 p-2 rounded">
+                    <div key={index} className="text-xs bg-blue-50 text-blue-800 p-1.5 rounded">
                       • {rec}
                     </div>
                   ))}
@@ -186,27 +186,27 @@ const DigitalSignage: React.FC<DigitalSignageProps> = ({ zones, demographicData 
       </div>
 
       {/* 실시간 콘텐츠 현황 */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-          <h4 className="font-semibold text-blue-900">실시간 콘텐츠 업데이트 현황</h4>
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-2 sm:p-3">
+        <div className="flex items-center gap-2 mb-2 sm:mb-3">
+          <div className="w-2 h-2 sm:w-3 sm:h-3 bg-blue-500 rounded-full animate-pulse"></div>
+          <h4 className="font-semibold text-blue-900 text-xs sm:text-sm">실시간 콘텐츠 업데이트 현황</h4>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 text-xs">
           <div>
             <div className="text-blue-700 font-medium">활성 디스플레이</div>
-            <div className="text-2xl font-bold text-blue-900">24개</div>
+            <div className="text-sm sm:text-base lg:text-lg font-bold text-blue-900">24개</div>
           </div>
           <div>
             <div className="text-blue-700 font-medium">실시간 AI 분석중</div>
-            <div className="text-2xl font-bold text-blue-900">98%</div>
+            <div className="text-sm sm:text-base lg:text-lg font-bold text-blue-900">98%</div>
           </div>
           <div>
             <div className="text-blue-700 font-medium">맞춤 광고 노출</div>
-            <div className="text-2xl font-bold text-blue-900">156건</div>
+            <div className="text-sm sm:text-base lg:text-lg font-bold text-blue-900">156건</div>
           </div>
           <div>
             <div className="text-blue-700 font-medium">평균 조회시간</div>
-            <div className="text-2xl font-bold text-blue-900">4.2초</div>
+            <div className="text-sm sm:text-base lg:text-lg font-bold text-blue-900">4.2초</div>
           </div>
         </div>
       </div>

@@ -30,39 +30,39 @@ const CrowdDensity: React.FC<CrowdDensityProps> = ({ zones }) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="h-full overflow-auto space-y-2 sm:space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-          <Users className="w-6 h-6 text-blue-600" />
+        <h2 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 flex items-center gap-2">
+          <Users className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-blue-600" />
           구역별 실시간 관중 밀집도
         </h2>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="flex items-center gap-2 text-xs text-gray-600">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
           실시간 AI 분석중
         </div>
       </div>
 
       {/* 전체 현황 카드 */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
         {zones.map((zone) => {
           const percentage = Math.round((zone.currentOccupancy / zone.totalSeats) * 100);
           const densityInfo = getDensityStatus(percentage);
           
           return (
-            <div key={zone.id} className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-2">{zone.name}</h3>
-              <div className="space-y-3">
+            <div key={zone.id} className="bg-white rounded-lg p-2 sm:p-3 border border-gray-200 shadow-sm">
+              <h3 className="font-semibold text-gray-900 mb-1 sm:mb-2 text-xs sm:text-sm">{zone.name}</h3>
+              <div className="space-y-1 sm:space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">현재 관중</span>
-                  <span className="font-bold text-lg">{zone.currentOccupancy.toLocaleString()}</span>
+                  <span className="text-xs text-gray-600">현재 관중</span>
+                  <span className="font-bold text-sm sm:text-base">{zone.currentOccupancy.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">전체 좌석</span>
-                  <span className="text-sm text-gray-500">{zone.totalSeats.toLocaleString()}</span>
+                  <span className="text-xs text-gray-600">전체 좌석</span>
+                  <span className="text-xs text-gray-500">{zone.totalSeats.toLocaleString()}</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-1.5">
                   <div
-                    className={`h-2 rounded-full transition-all duration-300 ${
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
                       percentage >= 95 ? 'bg-red-500' :
                       percentage >= 80 ? 'bg-orange-500' :
                       percentage >= 60 ? 'bg-yellow-500' : 'bg-green-500'
@@ -71,8 +71,8 @@ const CrowdDensity: React.FC<CrowdDensityProps> = ({ zones }) => {
                   ></div>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-gray-900">{percentage}%</span>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${densityInfo.color}`}>
+                  <span className="text-sm sm:text-base font-bold text-gray-900">{percentage}%</span>
+                  <span className={`px-1 py-0.5 rounded-full text-xs font-medium ${densityInfo.color}`}>
                     {densityInfo.status}
                   </span>
                 </div>
@@ -83,11 +83,11 @@ const CrowdDensity: React.FC<CrowdDensityProps> = ({ zones }) => {
       </div>
 
       {/* 혼잡도 히트맵 */}
-      <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">구역별 혼잡도</h3>
+      <div className="bg-white rounded-lg p-2 sm:p-3 border border-gray-200 shadow-sm">
+        <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3">구역별 혼잡도</h3>
         
         {/* 히트맵 그리드 */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 sm:gap-3">
           {zones.map((zone) => {
             const percentage = Math.round((zone.currentOccupancy / zone.totalSeats) * 100);
             const densityInfo = getDensityStatus(percentage);
@@ -95,17 +95,17 @@ const CrowdDensity: React.FC<CrowdDensityProps> = ({ zones }) => {
             
             return (
               <div key={zone.id} className="relative">
-                <div className={`${heatmapColor} rounded-lg p-6 text-white shadow-lg transition-all duration-300 hover:scale-105`}>
+                <div className={`${heatmapColor} rounded-lg p-2 sm:p-3 text-white shadow-lg transition-all duration-300 hover:scale-105 h-full flex flex-col justify-center`}>
                   <div className="text-center">
-                    <h4 className="font-bold text-lg mb-2">{zone.name}</h4>
-                    <div className="text-3xl font-bold mb-1">{percentage}%</div>
-                    <div className="text-sm opacity-90">
+                    <h4 className="font-bold text-xs sm:text-sm mb-1">{zone.name}</h4>
+                    <div className="text-lg sm:text-xl font-bold mb-1">{percentage}%</div>
+                    <div className="text-xs opacity-90">
                       {zone.currentOccupancy.toLocaleString()}명 / {zone.totalSeats.toLocaleString()}석
                     </div>
                   </div>
                 </div>
-                <div className="mt-2 text-center">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${densityInfo.color}`}>
+                <div className="mt-1 text-center">
+                  <span className={`px-1 py-0.5 rounded-full text-xs font-medium ${densityInfo.color}`}>
                     {densityInfo.status}
                   </span>
                 </div>
@@ -113,17 +113,15 @@ const CrowdDensity: React.FC<CrowdDensityProps> = ({ zones }) => {
             );
           })}
         </div>
-        
-
       </div>
 
       {/* 혼잡도 알림 */}
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-        <div className="flex items-center gap-2 mb-2">
+      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-2 sm:p-3">
+        <div className="flex items-center gap-2 mb-1">
           <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-          <h4 className="font-semibold text-yellow-800">혼잡도 알림</h4>
+          <h4 className="font-semibold text-yellow-800 text-xs sm:text-sm">혼잡도 알림</h4>
         </div>
-        <div className="text-sm text-yellow-700">
+        <div className="text-xs text-yellow-700">
           <p>• 내야 중앙: 혼잡도 {Math.round((zones.find(z => z.id === 'home-plate')?.currentOccupancy || 0) / (zones.find(z => z.id === 'home-plate')?.totalSeats || 1) * 100)}% - 주의 필요</p>
           <p>• 1루 내야 구역: 혼잡도 {Math.round((zones.find(z => z.id === 'first-infield')?.currentOccupancy || 0) / (zones.find(z => z.id === 'first-infield')?.totalSeats || 1) * 100)}% - 모니터링 중</p>
         </div>

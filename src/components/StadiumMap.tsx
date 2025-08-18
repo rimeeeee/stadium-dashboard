@@ -51,9 +51,9 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ zones, onZoneClick, selectedZon
   });
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col lg:flex-row gap-2 sm:gap-3 h-full">
       {/* 메인 구장 지도 */}
-      <div className="flex-1">
+      <div className="flex-1 min-h-0">
         <div className="relative w-full aspect-[4/3] bg-white rounded-lg border-2 border-gray-300 overflow-hidden">
           {/* 경기장 배경 이미지 */}
           <div className="absolute inset-0">
@@ -91,10 +91,10 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ zones, onZoneClick, selectedZon
                   transform: pos.transform,
                 }}
               >
-                <div className="bg-black bg-opacity-80 px-3 py-2 rounded-lg shadow-lg">
-                  <div className="text-white text-xs font-bold mb-2 text-center">{zone.name}</div>
+                <div className="bg-black bg-opacity-80 px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-lg shadow-lg">
+                  <div className="text-white text-xs font-bold mb-0.5 sm:mb-1 text-center">{zone.name}</div>
                   <div
-                    className={`w-3 h-3 rounded-full ${getDensityColor(zone.density)} shadow-lg mx-auto`}
+                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${getDensityColor(zone.density)} shadow-lg mx-auto`}
                     title={`${zone.areas.join(', ')} - ${zone.density}`}
                   ></div>
                 </div>
@@ -104,26 +104,26 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ zones, onZoneClick, selectedZon
         </div>
 
         {/* 범례 */}
-        <div className="mt-4 flex justify-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <span className="text-sm text-gray-700">여유</span>
+        <div className="mt-2 flex justify-center gap-1 sm:gap-2">
+          <div className="flex items-center gap-1">
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
+            <span className="text-xs text-gray-700">여유</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <span className="text-sm text-gray-700">보통</span>
+          <div className="flex items-center gap-1">
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-yellow-500 rounded-full"></div>
+            <span className="text-xs text-gray-700">보통</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-red-600 rounded-full"></div>
-            <span className="text-sm text-gray-700">혼잡</span>
+          <div className="flex items-center gap-1">
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-600 rounded-full"></div>
+            <span className="text-xs text-gray-700">혼잡</span>
           </div>
         </div>
       </div>
 
       {/* 우측 상태 패널 */}
-      <div className="w-80 bg-white rounded-lg border border-gray-200 shadow-sm p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900">구역별 상태</h3>
+      <div className="w-full lg:w-64 bg-white rounded-lg border border-gray-200 shadow-sm p-2 sm:p-3 flex-shrink-0">
+        <div className="flex items-center justify-between mb-2 sm:mb-3">
+          <h3 className="text-sm sm:text-base font-semibold text-gray-900">구역별 상태</h3>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             <span className="text-xs text-gray-500">실시간</span>
@@ -131,9 +131,9 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ zones, onZoneClick, selectedZon
         </div>
 
         {/* 필터 */}
-        <div className="mb-4">
+        <div className="mb-2 sm:mb-3">
           <select 
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+            className="w-full px-2 sm:px-3 py-1 sm:py-2 border border-gray-300 rounded-lg text-xs sm:text-sm"
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
@@ -145,37 +145,37 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ zones, onZoneClick, selectedZon
         </div>
 
         {/* 구역 목록 */}
-        <div className="space-y-2 max-h-96 overflow-y-auto">
+        <div className="space-y-1 sm:space-y-2 max-h-32 sm:max-h-48 overflow-y-auto">
           {filteredZoneData.map((zone) => (
             <div
               key={zone.id}
-              className={`flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors ${
+              className={`flex items-center justify-between p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors ${
                 selectedZone === zone.id ? 'bg-blue-50 border border-blue-200' : 'bg-gray-50'
               }`}
               onClick={() => onZoneClick(zone.id)}
             >
-                          <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-gray-900 mb-1">{zone.name}</div>
-              <div className="text-xs text-gray-500 break-words leading-tight">
-                {zone.areas.join(', ')}
+              <div className="flex-1 min-w-0">
+                <div className="text-xs sm:text-sm font-medium text-gray-900 mb-0.5">{zone.name}</div>
+                <div className="text-xs text-gray-500 break-words leading-tight">
+                  {zone.areas.join(', ')}
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-2 flex-shrink-0 ml-3">
-              <div className={`w-3 h-3 rounded-full ${getDensityColor(zone.density)} shadow-lg`}></div>
-              <span className="text-xs text-gray-600">{getDensityStatus(zone.density)}</span>
-            </div>
+              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 ml-2">
+                <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${getDensityColor(zone.density)} shadow-lg`}></div>
+                <span className="text-xs text-gray-600">{getDensityStatus(zone.density)}</span>
+              </div>
             </div>
           ))}
         </div>
 
         {/* 하단 브랜딩 */}
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <div className="flex items-center justify-center gap-4">
-            <div className="flex items-center gap-2">
-              <img src="/logo.png" alt="STADIUM X Logo" className="w-24 h-24" />
+        <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-gray-200">
+          <div className="flex items-center justify-center gap-1 sm:gap-2">
+            <div className="flex items-center gap-1">
+              <img src="/logo.png" alt="STADIUM X Logo" className="w-8 h-8 sm:w-12 sm:h-12" />
             </div>
-            <div className="flex items-center gap-2">
-              <img src="/twins.png" alt="LG TWINS Logo" className="h-8 w-auto" />
+            <div className="flex items-center gap-1">
+              <img src="/twins.png" alt="LG TWINS Logo" className="h-3 sm:h-4 w-auto" />
             </div>
           </div>
         </div>

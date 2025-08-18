@@ -114,28 +114,28 @@ const DetailedStatus: React.FC<DetailedStatusProps> = ({ sections }) => {
   }));
 
   return (
-    <div className="space-y-6">
+    <div className="h-full overflow-auto space-y-2 sm:space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-          <ClipboardList className="w-6 h-6 text-blue-600" />
+        <h2 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 flex items-center gap-2">
+          <ClipboardList className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-blue-600" />
           구역별 상세 현황
         </h2>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="flex items-center gap-2 text-xs text-gray-600">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
           실시간 AI 분석중
         </div>
       </div>
 
       {/* 구역 선택 드롭다운 */}
-      <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div className="bg-white rounded-lg p-2 sm:p-3 border border-gray-200 shadow-sm">
+        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
           구역 선택
         </label>
         <div className="relative">
           <select
             value={selectedZone}
             onChange={(e) => setSelectedZone(e.target.value)}
-            className="appearance-none w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+            className="appearance-none w-full px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10 text-sm"
           >
             {zoneOptions.map((zone) => (
               <option key={zone} value={zone}>
@@ -148,8 +148,8 @@ const DetailedStatus: React.FC<DetailedStatusProps> = ({ sections }) => {
       </div>
 
       {/* 선택된 구역 정보 */}
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-gray-900 border-b border-gray-200 pb-2">
+      <div className="space-y-2 sm:space-y-3">
+        <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 border-b border-gray-200 pb-1 sm:pb-2">
           {selectedZone}
         </h3>
         
@@ -159,16 +159,16 @@ const DetailedStatus: React.FC<DetailedStatusProps> = ({ sections }) => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-2 sm:px-3 py-1.5 sm:py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     구역번호
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-2 sm:px-3 py-1.5 sm:py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     총 좌석수
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-2 sm:px-3 py-1.5 sm:py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     관중수
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-2 sm:px-3 py-1.5 sm:py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     혼잡도
                   </th>
 
@@ -177,21 +177,21 @@ const DetailedStatus: React.FC<DetailedStatusProps> = ({ sections }) => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {selectedSections.map((section) => (
                   <tr key={section.sectionNumber} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-2 sm:px-3 py-2 sm:py-3 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
                       {section.sectionNumber}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-2 sm:px-3 py-2 sm:py-3 whitespace-nowrap text-xs sm:text-sm text-gray-500">
                       {section.totalSeats.toLocaleString()}석
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-2 sm:px-3 py-2 sm:py-3 whitespace-nowrap text-xs sm:text-sm text-gray-900">
                       {section.currentOccupancy.toLocaleString()}명
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-900">
+                    <td className="px-2 sm:px-3 py-2 sm:py-3 whitespace-nowrap">
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        <span className="text-xs sm:text-sm font-medium text-gray-900">
                           {section.density.toFixed(1)}%
                         </span>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDensityColor(section.density)}`}>
+                        <span className={`px-1 py-0.5 rounded-full text-xs font-medium ${getDensityColor(section.density)}`}>
                           {getDensityStatus(section.density)}
                         </span>
                       </div>
@@ -205,21 +205,21 @@ const DetailedStatus: React.FC<DetailedStatusProps> = ({ sections }) => {
         </div>
 
         {/* 차트 섹션 */}
-        <div className="space-y-6">
+        <div className="space-y-2 sm:space-y-3">
           {/* 혼잡도 히트맵 */}
-          <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Users className="w-5 h-5 text-red-600" />
+          <div className="bg-white rounded-lg p-2 sm:p-3 border border-gray-200 shadow-sm">
+            <h4 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3 flex items-center gap-2">
+              <Users className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" />
               {selectedZone} - 혼잡도 히트맵
             </h4>
-            <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1 sm:gap-2">
               {selectedSections.map((section) => {
                 const heatmapColor = getRelativeDensityHeatmapColor(section.density, selectedSections);
                 return (
                   <div key={section.sectionNumber} className="text-center">
-                    <div className={`${heatmapColor} rounded-lg p-3 text-white shadow-sm transition-all duration-300 hover:scale-105`}>
-                      <div className="text-xs font-bold mb-1">{section.sectionNumber}</div>
-                      <div className="text-sm font-bold">{section.density.toFixed(0)}%</div>
+                    <div className={`${heatmapColor} rounded-lg p-1.5 sm:p-2 text-white shadow-sm transition-all duration-300 hover:scale-105`}>
+                      <div className="text-xs font-bold mb-0.5">{section.sectionNumber}</div>
+                      <div className="text-xs sm:text-sm font-bold">{section.density.toFixed(0)}%</div>
                     </div>
                     <div className="text-xs text-gray-600 mt-1">
                       {section.currentOccupancy}명
